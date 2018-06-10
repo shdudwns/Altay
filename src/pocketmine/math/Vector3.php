@@ -187,6 +187,60 @@ class Vector3{
 		throw new \InvalidArgumentException("Invalid side $side given to getOppositeSide");
 	}
 
+	/**
+	 * Rotate this BlockFace around the Y axis counter-clockwise (NORTH => WEST => SOUTH => EAST => NORTH)
+	 *
+	 * @param int $side
+	 * @return int
+	 */
+	public static function rotateYCCW(int $side) : int{
+		/**
+		 * 2 => 4
+		 * 3 => 5
+		 * 4 => 3
+		 * 5 => 2
+		 */
+		switch($side){
+			case self::SIDE_NORTH:
+				return self::SIDE_WEST;
+			case self::SIDE_SOUTH:
+				return self::SIDE_EAST;
+			case self::SIDE_WEST:
+				return self::SIDE_SOUTH;
+			case self::SIDE_EAST:
+				return self::SIDE_NORTH;
+		}
+
+		throw new \InvalidArgumentException("Unable to get counter-clockwise Y-rotated face of $side");
+	}
+
+	/**
+	 * Rotate this BlockFace around the Y axis clockwise (NORTH => EAST => SOUTH => WEST => NORTH)
+	 *
+	 * @param int $side
+	 * @return int
+	 */
+	public static function rotateY(int $side) : int{
+		/**
+		 * 2 => 5
+		 * 3 => 4
+		 * 4 => 2
+		 * 5 => 3
+		 */
+		switch($side){
+			case self::SIDE_NORTH:
+				return self::SIDE_EAST;
+			case self::SIDE_SOUTH:
+				return self::SIDE_WEST;
+			case self::SIDE_WEST:
+				return self::SIDE_NORTH;
+			case self::SIDE_EAST:
+				return self::SIDE_SOUTH;
+		}
+
+		throw new \InvalidArgumentException("Unable to get counter-clockwise Y-rotated face of $side");
+	}
+
 	public function distance(Vector3 $pos) : float{
 		return sqrt($this->distanceSquared($pos));
 	}

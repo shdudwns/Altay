@@ -1078,6 +1078,16 @@ class Level implements ChunkManager, Metadatable{
 		}
 	}
 
+	public function updateAroundRedstone(Block $block, ?int $face = null) : void{
+		foreach($block->getAllSides() as $side => $block){
+			if($face !== null && $side == $face){
+				continue;
+			}
+
+			$block->onRedstoneUpdate();
+		}
+	}
+
 	/**
 	 * Schedules a block update to be executed after the specified number of ticks.
 	 * Blocks will be updated with the scheduled update type.
