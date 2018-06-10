@@ -198,7 +198,7 @@ class BlockFactory{
 		self::registerBlock(new EndStone());
 		self::registerBlock(new DragonEgg());
 		self::registerBlock(new RedstoneLamp());
-		self::registerBlock(new LitRedstoneLamp());
+		self::registerBlock(new RedstoneLampLit());
 		//TODO: DROPPER
 		self::registerBlock(new ActivatorRail());
 		self::registerBlock(new CocoaBlock());

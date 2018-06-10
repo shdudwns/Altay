@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\block;
 
-class LitRedstoneLamp extends RedstoneLamp{
+class RedstoneLampLit extends RedstoneLamp{
 
 	protected $id = self::LIT_REDSTONE_LAMP;
 
@@ -33,5 +33,23 @@ class LitRedstoneLamp extends RedstoneLamp{
 
 	public function getLightLevel() : int{
 		return 15;
+	}
+
+	public function onNearbyBlockChange() : void{
+		if(!$this->level->isBlockPowered($this)){
+			$this->level->scheduleDelayedBlockUpdate($this, 4);
+		}
+	}
+
+	public function onRedstoneUpdate() : void{
+		if(!$this->level->isBlockPowered($this)){
+			$this->level->scheduleDelayedBlockUpdate($this, 4);
+		}
+	}
+
+	public function onScheduledUpdate() : void{
+		if(!$this->level->isBlockPowered($this)){
+			$this->level->setBlock($this, BlockFactory::get(Block::REDSTONE_LAMP), false, false);
+		}
 	}
 }

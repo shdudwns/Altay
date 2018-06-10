@@ -3097,6 +3097,32 @@ class Level implements ChunkManager, Metadatable{
 		}
 	}
 
+	public function getStrongPower(Block $block) : int{
+		$power = 0;
+		for($i=0; $i<=5; $i++){
+			$power = max($power, $block->getStrongPower($i));
+			if($power >= 15){
+				return $power;
+			}
+		}
+
+		return $power;
+	}
+
+	public function getRedstonePower(Block $block, int $face) : int{
+		return $block->isNormalBlock() ? $this->getStrongPower($block) : $block->getWeakPower($face);
+	}
+
+	public function isBlockPowered(Block $block) : bool{
+		for($i=0; $i<=5; $i++){
+			if($this->getRedstonePower($block->getSide($i), $i) > 0){
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public function setMetadata(string $metadataKey, MetadataValue $newMetadataValue){
 		$this->server->getLevelMetadata()->setMetadata($this, $metadataKey, $newMetadataValue);
 	}

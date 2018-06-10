@@ -23,6 +23,10 @@ declare(strict_types=1);
 
 namespace pocketmine\block;
 
+use pocketmine\item\Item;
+use pocketmine\math\Vector3;
+use pocketmine\Player;
+
 class RedstoneLamp extends Solid{
 
 	protected $id = self::REDSTONE_LAMP;
@@ -37,5 +41,27 @@ class RedstoneLamp extends Solid{
 
 	public function getHardness() : float{
 		return 0.3;
+	}
+
+	public function place(Item $item, Block $blockReplace, Block $blockClicked, int $face, Vector3 $clickVector, Player $player = null) : bool{
+		if($this->level->isBlockPowered($this)){
+			$this->level->setBlock($this, BlockFactory::get(Block::LIT_REDSTONE_LAMP), false, true);
+		}else{
+			$this->level->setBlock($this, $this, false, true);
+		}
+
+		return true;
+	}
+
+	public function onNearbyBlockChange() : void{
+		if($this->level->isBlockPowered($this)){
+			$this->level->setBlock($this, BlockFactory::get(Block::LIT_REDSTONE_LAMP), false, false);
+		}
+	}
+
+	public function onRedstoneUpdate() : void{
+		if($this->level->isBlockPowered($this)){
+			$this->level->setBlock($this, BlockFactory::get(Block::LIT_REDSTONE_LAMP), false, false);
+		}
 	}
 }
