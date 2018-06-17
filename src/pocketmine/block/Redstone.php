@@ -37,6 +37,18 @@ class Redstone extends Solid{
 		return 5;
 	}
 
+	public function getBlastResistance() : float{
+		return 30;
+	}
+
+	public function isPowerSource() : bool{
+		return true;
+	}
+
+	public function getWeakPower(int $side) : int{
+		return 15;
+	}
+
 	public function getToolType() : int{
 		return BlockToolType::TYPE_PICKAXE;
 	}

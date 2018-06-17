@@ -311,6 +311,13 @@ class Block extends Position implements BlockIds, Metadatable{
 	}
 
 	/**
+	 * Called when this block is updated by redstone source.
+	 */
+	public function onRedstoneUpdate() : void{
+
+	}
+
+	/**
 	 * Do actions when activated by Item. Returns if it has done anything
 	 *
 	 * @param Item        $item
@@ -384,6 +391,14 @@ class Block extends Position implements BlockIds, Metadatable{
 
 	public function isSolid() : bool{
 		return true;
+	}
+
+	public function isPowerSource() : bool{
+		return false;
+	}
+
+	public function isNormalBlock() : bool{
+		return !$this->isTransparent() && $this->isSolid() && !$this->isPowerSource();
 	}
 
 	/**
@@ -567,6 +582,14 @@ class Block extends Position implements BlockIds, Metadatable{
 
 	}
 
+	public function getWeakPower(int $side) : int{
+		return 0;
+	}
+
+	public function getStrongPower(int $side) : int{
+		return 0;
+	}
+
 	/**
 	 * Returns the Block on the side $side, works like Vector3::getSide()
 	 *
@@ -590,10 +613,17 @@ class Block extends Position implements BlockIds, Metadatable{
 	 */
 	public function getHorizontalSides() : array{
 		return [
-			$this->getSide(Vector3::SIDE_NORTH),
-			$this->getSide(Vector3::SIDE_SOUTH),
-			$this->getSide(Vector3::SIDE_WEST),
-			$this->getSide(Vector3::SIDE_EAST)
+			Vector3::SIDE_NORTH => $this->getSide(Vector3::SIDE_NORTH),
+			Vector3::SIDE_SOUTH => $this->getSide(Vector3::SIDE_SOUTH),
+			Vector3::SIDE_WEST => $this->getSide(Vector3::SIDE_WEST),
+			Vector3::SIDE_EAST => $this->getSide(Vector3::SIDE_EAST)
+		];
+	}
+
+	public function getVerticalSides() : array{
+		return [
+			Vector3::SIDE_DOWN => $this->getSide(Vector3::SIDE_DOWN),
+			Vector3::SIDE_UP => $this->getSide(Vector3::SIDE_UP)
 		];
 	}
 
@@ -604,10 +634,7 @@ class Block extends Position implements BlockIds, Metadatable{
 	 */
 	public function getAllSides() : array{
 		return array_merge(
-			[
-				$this->getSide(Vector3::SIDE_DOWN),
-				$this->getSide(Vector3::SIDE_UP)
-			],
+			$this->getVerticalSides(),
 			$this->getHorizontalSides()
 		);
 	}

@@ -129,7 +129,7 @@ class BlockFactory{
 		self::registerBlock(new MonsterSpawner());
 		self::registerBlock(new WoodenStairs(Block::OAK_STAIRS, 0, "Oak Stairs"));
 		self::registerBlock(new Chest());
-		//TODO: REDSTONE_WIRE
+		self::registerBlock(new RedstoneWire());
 		self::registerBlock(new DiamondOre());
 		self::registerBlock(new Diamond());
 		self::registerBlock(new CraftingTable());
@@ -198,7 +198,7 @@ class BlockFactory{
 		self::registerBlock(new EndStone());
 		self::registerBlock(new DragonEgg());
 		self::registerBlock(new RedstoneLamp());
-		self::registerBlock(new LitRedstoneLamp());
+		self::registerBlock(new RedstoneLampLit());
 		//TODO: DROPPER
 		self::registerBlock(new ActivatorRail());
 		self::registerBlock(new CocoaBlock());
